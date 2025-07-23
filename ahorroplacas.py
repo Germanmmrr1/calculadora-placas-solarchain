@@ -80,7 +80,7 @@ with col2:
     gasto_mensual = st.number_input(
         "¿Cuál es tu gasto mensual medio en electricidad? (€)",
         min_value=0.0,
-        value=50.0,
+        value=100.0,
         step=1.0
     )
 
