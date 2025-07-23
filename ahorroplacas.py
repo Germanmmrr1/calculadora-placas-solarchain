@@ -3,16 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Muestra el logo centrado arriba
-st.markdown(
-    """
-    <div style='text-align: center;'>
-        <a href='https://solarchain.es' target='_blank'>
-            <img src='logo_solarchain.png' width='180'/>
-        </a>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+cols = st.columns([1,2,1])
+with cols[1]:
+    st.image("logo_solarchain.png", width=180)
 
 # Colores y tipografía
 principal_color = "#FF6839"  # Naranja principal
