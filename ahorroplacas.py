@@ -141,15 +141,6 @@ if gasto_mensual > 0 and ibi_anual > 0:
     ax.plot(anios, inversion_linea, "--", color="#444", linewidth=2, label="Inversión inicial")
     if payback_real and payback_real <= 20:
         ax.axvline(payback_real, color="#FF6839", linestyle=":", linewidth=2, alpha=0.6)
-        ax.annotate(
-            f"Payback: año {payback_real}",
-            xy=(payback_real, inversion),
-            xytext=(payback_real + 1, inversion + 500),
-            arrowprops=dict(facecolor='#FF6839', shrink=0.05),
-            fontsize=11,
-            color=principal_color,
-            fontweight='bold'
-        )
     ax.set_title("Ahorro acumulado estimado vs Inversión inicial (20 años)", fontsize=15, color=principal_color)
     ax.set_xlabel("Años", fontsize=12, color=secundario_color)
     ax.set_ylabel("€", fontsize=12, color=secundario_color)
