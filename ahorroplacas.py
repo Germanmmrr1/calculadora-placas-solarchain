@@ -77,9 +77,9 @@ st.markdown(
 
 # --- FORMULARIO ---
 bonificaciones_ibi = {
+    "Córdoba": {"porcentaje": 50, "anios": 10},
     "Almería": {"porcentaje": 50, "anios": 3},
     "Cádiz": {"porcentaje": 50, "anios": 4},
-    "Córdoba": {"porcentaje": 50, "anios": 10},
     "Granada": {"porcentaje": 50, "anios": 1},
     "Huelva": {"porcentaje": 50, "anios": 3},
     "Jaén": {"porcentaje": 50, "anios": 3},  # Por defecto, confirma según tu municipio si necesitas
@@ -89,7 +89,7 @@ bonificaciones_ibi = {
 
 provincia = st.selectbox("Selecciona tu provincia", list(bonificaciones_ibi.keys()))
 gasto_mensual = st.number_input("¿Cuál es tu gasto mensual medio en electricidad? (€)", min_value=0.0, value=100.0, step=5.0)
-ibi_anual = st.number_input("¿Cuánto pagas de IBI al año? (€)", min_value=0.0, value=300.0, step=10.0)
+ibi_anual = st.number_input("¿Cuánto pagas de IBI al año? (€)", min_value=0.0, value=400.0, step=10.0)
 
 porcentaje_boni = bonificaciones_ibi[provincia]["porcentaje"]
 anios_boni = bonificaciones_ibi[provincia]["anios"]
