@@ -128,4 +128,50 @@ if gasto_mensual > 0 and ibi_anual > 0:
         f"<p style='font-size:1.13em; color:{principal_color};'><b>Gasto anual antes de instalar placas:</b> {gasto_anual:,.0f} €</p>"
         f"<p style='font-size:1.13em; color:{principal_color};'><b>Ahorro anual estimado:</b> {ahorro_anual:,.0f} €</p>"
         f"<p style='font-size:1.13em; color:{principal_color};'><b>Ahorro total bonificación IBI:</b> {ahorro_ibi:,.0f} €</p>"
-        f"<p style='
+        f"<p style='font-size:1.13em; color:{principal_color};'><b>Inversión estimada:</b> {inversion:,.0f} €</p>"
+        f"<p style='font-size:1.13em; color:{principal_color};'><b>Años estimados para recuperar la inversión:</b> {payback_texto}</p>"
+        "</div>",
+        unsafe_allow_html=True
+    )
+
+    # --- GRÁFICA ---
+    inversion_linea = np.full_like(anios, inversion, dtype=float)
+    fig, ax = plt.subplots(figsize=(8, 4))
+    ax.plot(anios, ahorro_acumulado, marker="o", color="#FF6839", linewidth=2, label="Ahorro acumulado (incl. IBI)")
+    ax.plot(anios, inversion_linea, "--", color="#444", linewidth=2, label="Inversión inicial")
+    if payback_real and payback_real <= 20:
+        ax.axvline(payback_real, color="#FF6839", linestyle=":", linewidth=2, alpha=0.6)
+        ax.annotate(
+            f"Payback: año {payback_real}",
+            xy=(payback_real, inversion),
+            xytext=(payback_real + 1, inversion + 500),
+            arrowprops=dict(facecolor='#FF6839', shrink=0.05),
+            fontsize=11,
+            color=principal_color,
+            fontweight='bold'
+        )
+    ax.set_title("Ahorro acumulado estimado vs Inversión inicial (20 años)", fontsize=15, color=principal_color)
+    ax.set_xlabel("Años", fontsize=12, color=secundario_color)
+    ax.set_ylabel("€", fontsize=12, color=secundario_color)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.grid(True, linestyle="--", alpha=0.3)
+    ax.tick_params(colors=secundario_color)
+    ax.yaxis.label.set_color(secundario_color)
+    ax.xaxis.label.set_color(secundario_color)
+    ax.title.set_color(principal_color)
+    plt.xticks(anios)
+    ax.legend()
+    plt.tight_layout()
+
+    st.pyplot(fig)
+
+    # --- AVISO ---
+    st.markdown(
+        f"<div class='info-box'>"
+        "Este cálculo es solo una estimación. "
+        "Para un estudio personalizado y mucho más preciso, contacta con "
+        "<a href='https://solarchain.es' target='_blank' style='color:#FF6839;text-decoration:underline;font-weight:600;'>solarchain.es</a>."
+        "</div>",
+        unsafe_allow_html=True
+    )
