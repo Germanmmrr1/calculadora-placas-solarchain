@@ -124,25 +124,29 @@ if gasto_mensual > 0:
     num_placas = round(num_placas)
     ahorro_anual = num_placas * 0.55 * 1500 * 0.15
     gasto_anual = gasto_mensual * 12
+    inversion = 4000 + 200 * num_placas
 
     st.markdown(
         f"<div class='result-box'>"
         f"<p style='font-size:1.18em; color:{principal_color};'><b>Número estimado de placas necesarias:</b> {num_placas}</p>"
         f"<p style='font-size:1.13em; color:{secundario_color};'><b>Gasto anual antes de instalar placas:</b> {gasto_anual:,.0f} €</p>"
         f"<p style='font-size:1.13em; color:{principal_color};'><b>Ahorro anual estimado:</b> {ahorro_anual:,.0f} €</p>"
+        f"<p style='font-size:1.13em; color:{principal_color};'><b>Inversión estimada:</b> {inversion:,.0f} €</p>"
         "</div>",
         unsafe_allow_html=True
     )
 
-    # Gráfica de ahorro acumulado a 20 años
+    # Gráfica de ahorro acumulado y línea de inversión
     anios = np.arange(1, 21)
     ahorro_acumulado = ahorro_anual * anios
+    inversion_linea = np.full_like(anios, inversion)
 
     fig, ax = plt.subplots(figsize=(8, 4))
-    ax.plot(anios, ahorro_acumulado, marker="o", color="#FF6839", linewidth=2)
-    ax.set_title("Ahorro acumulado estimado en 20 años", fontsize=16, color=principal_color)
+    ax.plot(anios, ahorro_acumulado, marker="o", color="#FF6839", linewidth=2, label="Ahorro acumulado")
+    ax.plot(anios, inversion_linea, "--", color="#444", linewidth=2, label="Inversión inicial")
+    ax.set_title("Ahorro acumulado estimado vs Inversión inicial (20 años)", fontsize=15, color=principal_color)
     ax.set_xlabel("Años", fontsize=12, color=secundario_color)
-    ax.set_ylabel("Ahorro acumulado (€)", fontsize=12, color=secundario_color)
+    ax.set_ylabel("€", fontsize=12, color=secundario_color)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.grid(True, linestyle="--", alpha=0.3)
@@ -151,6 +155,7 @@ if gasto_mensual > 0:
     ax.xaxis.label.set_color(secundario_color)
     ax.title.set_color(principal_color)
     plt.xticks(anios)
+    ax.legend()
     plt.tight_layout()
 
     st.pyplot(fig)
