@@ -125,14 +125,16 @@ if gasto_mensual > 0 and ibi_anual > 0:
 
     # --- GRÁFICA ---
     anios = np.arange(1, 21)
-    ahorro_acumulado = ahorro_anual * anios
-    # Suma bonificación IBI el año correspondiente
-    for i in range(anios_boni):
-        if i < len(ahorro_acumulado):
-            ahorro_acumulado[i] += ibi_anual * (porcentaje_boni / 100)
-    ahorro_acumulado = np.cumsum(np.diff(np.insert(ahorro_acumulado, 0, 0)))
+    ahorro_acumulado = []
+    acumulado = 0
 
-    inversion_linea = np.full_like(anios, inversion)
+    for i in range(20):
+        if i < anios_boni:
+            ahorro_anual_total = ahorro_anual + ibi_anual * (porcentaje_boni / 100)
+        else:
+            ahorro_anual_total = ahorro_anual
+        acumulado += ahorro_anual_total
+        ahorro_acumulado.append(acumulado)
 
     fig, ax = plt.subplots(figsize=(8, 4))
     ax.plot(anios, ahorro_acumulado, marker="o", color="#FF6839", linewidth=2, label="Ahorro acumulado (incl. IBI)")
