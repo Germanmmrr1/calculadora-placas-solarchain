@@ -70,6 +70,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.markdown(
+    """
+    <style>
+    /* Oculta la barra superior de Streamlit Cloud (Share, GitHub, etc.) */
+    header[data-testid="stHeader"] {visibility: hidden;}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 provincias = [
     "Álava", "Albacete", "Alicante", "Almería", "Asturias", "Ávila", "Badajoz",
     "Barcelona", "Burgos", "Cáceres", "Cádiz", "Cantabria", "Castellón", "Ciudad Real",
