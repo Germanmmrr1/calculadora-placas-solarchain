@@ -9,6 +9,32 @@ bg_color = "#FFFFFF"
 font_family = "'Montserrat', 'Arial', sans-serif"
 
 st.markdown(
+    """
+    <style>
+    .stApp {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 750px;
+        margin: 0 auto;
+    }
+    .block-container {
+        width: 100% !important;
+        max-width: 700px !important;
+        margin: 0 auto;
+    }
+    /* Centra títulos y bloques importantes */
+    h1, h2, h3, .result-box, .info-box, .stAlert, .element-container {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
     f"""
     <style>
     .main, .stApp {{
