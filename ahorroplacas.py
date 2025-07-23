@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Muestra el logo centrado arriba
-cols = st.columns([2,3,2])
+cols = st.columns([2,1,2])
 with cols[1]:
-    st.image("logo_solarchain.png", use_column_width=True)
+    st.image("logo_solarchain.png", use_container_width=True)
 
 # Colores y tipografía
 principal_color = "#FF6839"  # Naranja principal
