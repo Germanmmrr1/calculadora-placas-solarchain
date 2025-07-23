@@ -12,17 +12,20 @@ font_family = "'Montserrat', 'Arial', sans-serif"
 st.markdown(
     f"""
     <style>
+    /* Fondo y textos generales */
     .main, .stApp {{
         background-color: {bg_color};
         color: {secundario_color};
         font-family: {font_family};
     }}
+    /* Títulos */
     h1, h2, h3, .big {{
         color: {principal_color} !important;
         font-family: {font_family};
         font-weight: 700;
         text-align: center;
     }}
+    /* Caja de resultados */
     .result-box {{
         background: #fff4f0;
         border-left: 5px solid {principal_color};
@@ -32,6 +35,7 @@ st.markdown(
         font-family: {font_family};
         text-align: center;
     }}
+    /* Info-box */
     .info-box {{
         background: #f6f6f6;
         color: {principal_color};
@@ -43,8 +47,23 @@ st.markdown(
         font-family: {font_family};
         text-align: center;
     }}
+    /* Centrado de textos */
     .centered {{
         text-align: center;
+    }}
+    /* Forzar color negro en labels e inputs */
+    label, .stTextInput > label, .stSelectbox > label, .stNumberInput > label {{
+        color: #000000 !important;
+    }}
+    /* Menú desplegable selectbox */
+    .stSelectbox div[role="combobox"] {{
+        color: #000000 !important;
+        background-color: #fff !important;
+    }}
+    /* Valor del input numérico */
+    .stNumberInput input {{
+        color: #000000 !important;
+        background-color: #fff !important;
     }}
     </style>
     """,
