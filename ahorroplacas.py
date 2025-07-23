@@ -9,32 +9,6 @@ bg_color = "#FFFFFF"
 font_family = "'Montserrat', 'Arial', sans-serif"
 
 st.markdown(
-    """
-    <style>
-    .stApp {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        max-width: 750px;
-        margin: 0 auto;
-    }
-    .block-container {
-        width: 100% !important;
-        max-width: 700px !important;
-        margin: 0 auto;
-    }
-    /* Centra títulos y bloques importantes */
-    h1, h2, h3, .result-box, .info-box, .stAlert, .element-container {
-        text-align: center !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
     f"""
     <style>
     .main, .stApp {{
@@ -84,20 +58,23 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-center = st.columns([1,2,1])[1]
-with center:
-    # Aquí dentro mete TODO lo importante
+# --- LOGO CENTRADO ---
+cols = st.columns([2,1,2])
+with cols[1]:
     st.image("logo_solarchain.png", use_container_width=True)
-    st.markdown(
-        f"<h1 style='color:{principal_color}; font-family:{font_family}; font-size:2.6em;text-align:center;'>Calculadora de ahorro con placas solares</h1>",
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        f"<div style='color:{secundario_color}; font-size:1.15em; margin-bottom: 1.5em; text-align:center;'>"
-        "Introduce tu provincia, tu gasto mensual en electricidad y tu IBI anual para calcular el ahorro estimado y la recuperación de la inversión."
-        "</div>",
-        unsafe_allow_html=True
-    )
+
+# --- CABECERA ---
+st.markdown(
+    f"<h1 style='color:{principal_color}; font-family:{font_family}; font-size:2.6em;text-align:center;'>Calculadora de ahorro con placas solares</h1>",
+    unsafe_allow_html=True
+)
+st.markdown(
+    f"<div style='color:{secundario_color}; font-size:1.15em; margin-bottom: 1.5em; text-align:center;'>"
+    "Introduce tu provincia, tu gasto mensual en electricidad y tu IBI anual para calcular el ahorro estimado y la recuperación de la inversión."
+    "</div>",
+    unsafe_allow_html=True
+)
+
 # --- FORMULARIO ---
 bonificaciones_ibi = {
     "Córdoba": {"porcentaje": 50, "anios": 10},
