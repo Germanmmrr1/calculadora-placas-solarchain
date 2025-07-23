@@ -94,7 +94,24 @@ ibi_anual = st.number_input("¿Cuánto pagas de IBI al año? (€)", min_value=0
 porcentaje_boni = bonificaciones_ibi[provincia]["porcentaje"]
 anios_boni = bonificaciones_ibi[provincia]["anios"]
 
-st.info(f"Bonificación automática en {provincia}: {porcentaje_boni}% de descuento en el IBI durante {anios_boni} años (según datos municipales)")
+st.markdown(
+    f"""
+    <div style='
+        background: #f9f9f9;
+        color: #000;
+        border-left: 5px solid {principal_color};
+        border-radius: 8px;
+        padding: 14px 18px;
+        margin-bottom: 18px;
+        font-size: 1.11em;
+        font-family: {font_family};
+        text-align: center;
+    '>
+    <b>Bonificación automática en {provincia}:</b> {porcentaje_boni}% de descuento en el IBI durante {anios_boni} años (según datos municipales)
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 if gasto_mensual > 0 and ibi_anual > 0:
     # --- CÁLCULOS ---
