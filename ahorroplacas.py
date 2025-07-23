@@ -88,7 +88,7 @@ bonificaciones_ibi = {
 }
 
 provincia = st.selectbox("Selecciona tu provincia", list(bonificaciones_ibi.keys()))
-gasto_mensual = st.number_input("¿Cuál es tu gasto mensual medio en electricidad? (€)", min_value=0.0, value=50.0, step=1.0)
+gasto_mensual = st.number_input("¿Cuál es tu gasto mensual medio en electricidad? (€)", min_value=0.0, value=100.0, step=5.0)
 ibi_anual = st.number_input("¿Cuánto pagas de IBI al año? (€)", min_value=0.0, value=300.0, step=10.0)
 
 porcentaje_boni = bonificaciones_ibi[provincia]["porcentaje"]
