@@ -99,25 +99,27 @@ st.info(f"Bonificación automática en {provincia}: {porcentaje_boni}% de descue
 if gasto_mensual > 0 and ibi_anual > 0:
     # --- CÁLCULOS ---
     num_placas = (gasto_mensual / 1.26) * 0.6 / 0.15 * 12 / 1500
-    num_placas = round(num_placas) * 2
-    ahorro_anual = num_placas * 0.55 * 1500 * 0.15
+    num_placas = round(num_placas)
+    ahorro_anual_base = num_placas * 0.55 * 1500 * 0.15
     gasto_anual = gasto_mensual * 12
     inversion = 4000 + 200 * num_placas
     ahorro_ibi = ibi_anual * (porcentaje_boni / 100) * anios_boni
 
-    # Cálculo del ahorro acumulado año a año (correcto)
+    # --- Cálculo del ahorro acumulado año a año con inflación del 2% ---
     anios = np.arange(1, 21)
     ahorro_acumulado = []
     acumulado = 0
+    inflacion = 0.02  # 2% anual
     for i in range(20):
+        ahorro_electricidad = ahorro_anual_base * ((1 + inflacion) ** i)
         if i < anios_boni:
-            ahorro_anual_total = ahorro_anual + ibi_anual * (porcentaje_boni / 100)
+            ahorro_anual_total = ahorro_electricidad + ibi_anual * (porcentaje_boni / 100)
         else:
-            ahorro_anual_total = ahorro_anual
+            ahorro_anual_total = ahorro_electricidad
         acumulado += ahorro_anual_total
         ahorro_acumulado.append(acumulado)
 
-    # Cálculo del año de payback real según la gráfica
+    # Payback real según la gráfica
     payback_real = next((i + 1 for i, ahorro in enumerate(ahorro_acumulado) if ahorro >= inversion), None)
     payback_texto = f"{payback_real} años" if payback_real else "Más de 20 años"
 
@@ -126,7 +128,7 @@ if gasto_mensual > 0 and ibi_anual > 0:
         f"<div class='result-box'>"
         f"<p style='font-size:1.18em; color:{principal_color};'><b>Número estimado de placas necesarias:</b> {num_placas}</p>"
         f"<p style='font-size:1.13em; color:{principal_color};'><b>Gasto anual antes de instalar placas:</b> {gasto_anual:,.0f} €</p>"
-        f"<p style='font-size:1.13em; color:{principal_color};'><b>Ahorro anual estimado:</b> {ahorro_anual:,.0f} €</p>"
+        f"<p style='font-size:1.13em; color:{principal_color};'><b>Ahorro anual estimado (primer año):</b> {ahorro_anual_base:,.0f} €</p>"
         f"<p style='font-size:1.13em; color:{principal_color};'><b>Ahorro total bonificación IBI:</b> {ahorro_ibi:,.0f} €</p>"
         f"<p style='font-size:1.13em; color:{principal_color};'><b>Inversión estimada:</b> {inversion:,.0f} €</p>"
         f"<p style='font-size:1.13em; color:{principal_color};'><b>Años estimados para recuperar la inversión:</b> {payback_texto}</p>"
@@ -137,7 +139,7 @@ if gasto_mensual > 0 and ibi_anual > 0:
     # --- GRÁFICA ---
     inversion_linea = np.full_like(anios, inversion, dtype=float)
     fig, ax = plt.subplots(figsize=(8, 4))
-    ax.plot(anios, ahorro_acumulado, marker="o", color="#FF6839", linewidth=2, label="Ahorro acumulado (incl. IBI)")
+    ax.plot(anios, ahorro_acumulado, marker="o", color="#FF6839", linewidth=2, label="Ahorro acumulado (incl. IBI e inflación luz)")
     ax.plot(anios, inversion_linea, "--", color="#444", linewidth=2, label="Inversión inicial")
     if payback_real and payback_real <= 20:
         ax.axvline(payback_real, color="#FF6839", linestyle=":", linewidth=2, alpha=0.6)
