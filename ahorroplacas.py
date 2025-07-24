@@ -179,27 +179,34 @@ if gasto_mensual > 0 and ibi_anual > 0:
 
     # --- AVISO ---
     st.markdown(
-        f"<div class='info-box'>"
-        "Este cálculo es solo una estimación. "
-        "Para un estudio personalizado y mucho más preciso, contacta con "
+        f"""
+        <div class='info-box'>
+            Este cálculo es solo una estimación.<br>
+            ¿Quieres un <b>estudio personalizado y sin compromiso</b> para tu caso concreto?  
+            Déjanos tu email aquí y te contactamos:
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    email = st.text_input("Tu email de contacto", value="", max_chars=60)
+    
+    if st.button("Quiero que me contacten"):
+        if re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            try:
+                with open("emails.txt", "a") as f:
+                    f.write(email.strip() + "\n")
+                st.success("¡Gracias! Nos pondremos en contacto contigo muy pronto.")
+            except Exception:
+                st.warning("Recibido. Si quieres una respuesta urgente, escríbenos a contacto@solarchain.es")
+        else:
+            st.error("Por favor, introduce un email válido.")
+    
+    # Puedes dejar el enlace a la web después, si lo ves útil:
+    st.markdown(
+        f"<div style='text-align:center; margin-top:12px; color:{principal_color}; font-size:1.06em;'>"
+        "O visita nuestra web: "
         "<a href='https://solarchain.es' target='_blank' style='color:#FF6839;text-decoration:underline;font-weight:600;'>solarchain.es</a>."
         "</div>",
         unsafe_allow_html=True
     )
-
-st.markdown(
-    "<div style='margin-top:2.5em; margin-bottom:0.5em; text-align:center;'>"
-    "<b>¿Quieres que te contactemos para un estudio personalizado?</b>"
-    "</div>",
-    unsafe_allow_html=True
-)
-
-email = st.text_input("Déjanos tu email y te contactaremos sin compromiso", value="", max_chars=60)
-
-if st.button("Enviar email"):
-    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
-        with open("emails.txt", "a") as f:
-            f.write(email.strip() + "\n")
-        st.success("¡Gracias! Nos pondremos en contacto contigo muy pronto.")
-    else:
-        st.error("Por favor, introduce un email válido.")
