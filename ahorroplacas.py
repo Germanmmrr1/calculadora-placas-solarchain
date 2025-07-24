@@ -11,7 +11,7 @@ secundario_color = "#000000"
 bg_color = "#FFFFFF"
 font_family = "'Montserrat', 'Arial', sans-serif"
 
-def send_notification_email(user_email, provincia, gasto_mensual, ibi_anual, num_placas, inversion, ahorro_anual_base, payback_texto):
+def send_notification_email(nombre,user_email, provincia, gasto_mensual, ibi_anual, num_placas, inversion, ahorro_anual_base, payback_texto):
     sender_email = "gmunozraya@gmail.com"
     sender_password = "eump xkih qqqm phhx"
     recipient_email = "gemura348@gmail.com"
@@ -20,6 +20,7 @@ def send_notification_email(user_email, provincia, gasto_mensual, ibi_anual, num
     body = f"""
     Nuevo lead recibido:
 
+    Nombre: {nombre}
     Email: {user_email}
     Provincia: {provincia}
     Gasto mensual en electricidad: {gasto_mensual} €
@@ -255,25 +256,44 @@ st.markdown(
             ¿Quieres un <span style="color:{principal_color};">estudio personalizado</span> y sin compromiso?
         </div>
         <div style='font-size: 1.11em; margin-bottom: 10px; color:#222;'>
-            Déjanos tu email aquí y te contactamos:
+            Déjanos tu nombre y tu email y te contactamos:
         </div>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-# Centered email input and button
+# Centered name and email input, and button
 cols = st.columns([1,2,1])
 with cols[1]:
-    email = st.text_input("", value="", max_chars=60, placeholder="tucorreo@ejemplo.com")
+    nombre = st.text_input("Nombre", value="", max_chars=60, placeholder="Tu nombre")
+    email = st.text_input("Email", value="", max_chars=60, placeholder="tucorreo@ejemplo.com")
     btn = st.button("Quiero que me contacten", use_container_width=True)
 
 # Custom success/error message, centered and black
 if btn:
-    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
+    if not nombre.strip():
+        st.markdown(
+            "<div style='background:#ffeaea; border-left:5px solid #FF6839; color:#111; padding:16px 18px; border-radius:10px; font-size:1.1em; margin-top:14px; text-align:center;'>"
+            "Por favor, introduce tu nombre."
+            "</div>",
+            unsafe_allow_html=True
+        )
+    elif not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        st.markdown(
+            "<div style='background:#ffeaea; border-left:5px solid #FF6839; color:#111; padding:16px 18px; border-radius:10px; font-size:1.1em; margin-top:14px; text-align:center;'>"
+            "Por favor, introduce un email válido."
+            "</div>",
+            unsafe_allow_html=True
+        )
+    else:
         try:
             with open("emails.txt", "a") as f:
-                f.write(email.strip() + "\n")
+                f.write(f"{nombre.strip()} <{email.strip()}>\n")
+            send_notification_email(
+                nombre, email, provincia, gasto_mensual, ibi_anual,
+                num_placas, inversion, ahorro_anual_base, payback_texto
+            )
             st.markdown(
                 "<div style='background:#e8ffe8; border-left:5px solid #00a651; color:#111; padding:16px 18px; border-radius:10px; font-size:1.1em; margin-top:14px; text-align:center;'>"
                 "¡Gracias! Nos pondremos en contacto contigo muy pronto."
@@ -286,21 +306,4 @@ if btn:
                 "Recibido. Si quieres una respuesta urgente, escríbenos a <b>info@solarchain.es</b>"
                 "</div>",
                 unsafe_allow_html=True
-            )
-    else:
-        st.markdown(
-            "<div style='background:#ffeaea; border-left:5px solid #FF6839; color:#111; padding:16px 18px; border-radius:10px; font-size:1.1em; margin-top:14px; text-align:center;'>"
-            "Por favor, introduce un email válido."
-            "</div>",
-            unsafe_allow_html=True
-        )
-
-if btn:
-    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
-        try:
-            with open("emails.txt", "a") as f:
-                f.write(email.strip() + "\n")
-            send_notification_email(
-                email, provincia, gasto_mensual, ibi_anual,
-                num_placas, inversion, ahorro_anual_base, payback_texto
             )
