@@ -10,6 +10,29 @@ bg_color = "#FFFFFF"
 font_family = "'Montserrat', 'Arial', sans-serif"
 
 st.markdown(
+    """
+    <style>
+    div.stButton > button:first-child {
+        color: #FF6839 !important;
+        border: 2px solid #FF6839 !important;
+        background: #fff !important;
+        font-weight: 600 !important;
+        border-radius: 12px;
+        padding: 0.5em 2.5em;
+        font-size: 1.13em;
+        transition: 0.1s;
+    }
+    div.stButton > button:first-child:hover {
+        background: #FF6839 !important;
+        color: #fff !important;
+        border: 2px solid #FF6839 !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
     f"""
     <style>
     .main, .stApp {{
@@ -211,9 +234,24 @@ if btn:
         try:
             with open("emails.txt", "a") as f:
                 f.write(email.strip() + "\n")
-            st.success("¡Gracias! Nos pondremos en contacto contigo muy pronto.")
+            st.markdown(
+                "<div style='background:#e8ffe8; border-left:5px solid #00a651; color:#111; padding:16px 18px; border-radius:10px; font-size:1.1em; margin-top:14px; text-align:center;'>"
+                "¡Gracias! Nos pondremos en contacto contigo muy pronto."
+                "</div>",
+                unsafe_allow_html=True
+            )
         except Exception:
-            st.warning("Recibido. Si quieres una respuesta urgente, escríbenos a contacto@solarchain.es")
+            st.markdown(
+                "<div style='background:#fffbe8; border-left:5px solid #FF6839; color:#111; padding:16px 18px; border-radius:10px; font-size:1.1em; margin-top:14px; text-align:center;'>"
+                "Recibido. Si quieres una respuesta urgente, escríbenos a <b>info@solarchain.es</b>"
+                "</div>",
+                unsafe_allow_html=True
+            )
     else:
-        st.error("Por favor, introduce un email válido.")
+        st.markdown(
+            "<div style='background:#ffeaea; border-left:5px solid #FF6839; color:#111; padding:16px 18px; border-radius:10px; font-size:1.1em; margin-top:14px; text-align:center;'>"
+            "Por favor, introduce un email válido."
+            "</div>",
+            unsafe_allow_html=True
+        )
     
