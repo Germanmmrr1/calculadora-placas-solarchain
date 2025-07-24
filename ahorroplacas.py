@@ -178,38 +178,43 @@ if gasto_mensual > 0 and ibi_anual > 0:
     st.pyplot(fig)
 
     # --- AVISO ---
-    st.markdown(
-        f"""
-        <div style='
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin-top: 2.2em;
-            margin-bottom: 0.7em;
-        '>
-            <div style='font-weight: 600; font-size:1.09em; margin-bottom: 12px;'>¿Quieres un <span style="color:{principal_color};">estudio personalizado</span> y sin compromiso?</div>
-            <div style='font-size: 1em; margin-bottom: 16px; color:#222;'>Déjanos tu email aquí y te contactamos:</div>
+principal_color = "#FF6839"
+
+st.markdown(
+    f"""
+    <div style='
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-top: 2em;
+        margin-bottom: 0.5em;
+    '>
+        <div style='font-weight: 700; font-size:1.35em; margin-bottom: 7px;'>
+            ¿Quieres un <span style="color:{principal_color};">estudio personalizado</span> y sin compromiso?
         </div>
-        """,
-        unsafe_allow_html=True
-    )
-    
-    # Centrar el input y el botón con columnas "vacías" a los lados
-    cols = st.columns([1,2,1])
-    with cols[1]:
-        email = st.text_input("", value="", max_chars=60, placeholder="tucorreo@ejemplo.com")
-        enviar = st.button("Quiero que me contacten")
-    
-    if enviar:
-        if re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            try:
-                with open("emails.txt", "a") as f:
-                    f.write(email.strip() + "\n")
-                st.success("¡Gracias! Nos pondremos en contacto contigo muy pronto.")
-            except Exception:
-                st.warning("Recibido. Si quieres una respuesta urgente, escríbenos a contacto@solarchain.es")
-        else:
-            st.error("Por favor, introduce un email válido.")
+        <div style='font-size: 1.11em; margin-bottom: 10px; color:#222;'>
+            Déjanos tu email aquí y te contactamos:
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# Centrar input y botón en el mismo bloque con HTML + st.form para que no haya hueco
+with st.form(key="contact_form", clear_on_submit=False):
+    email = st.text_input("", value="", max_chars=60, placeholder="tucorreo@ejemplo.com")
+    btn = st.form_submit_button("Quiero que me contacten", use_container_width=True)
+
+if btn:
+    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        try:
+            with open("emails.txt", "a") as f:
+                f.write(email.strip() + "\n")
+            st.success("¡Gracias! Nos pondremos en contacto contigo muy pronto.")
+        except Exception:
+            st.warning("Recibido. Si quieres una respuesta urgente, escríbenos a contacto@solarchain.es")
+    else:
+        st.error("Por favor, introduce un email válido.")
     
