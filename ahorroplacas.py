@@ -203,6 +203,7 @@ if gasto_mensual > 0 and ibi_anual > 0:
     # --- AVISO ---
 principal_color = "#FF6839"
 
+# Centered header and description
 st.markdown(
     f"""
     <div style='
@@ -225,15 +226,35 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Centrar input y botón en el mismo bloque con HTML + st.form para que no haya hueco
+# Centered email input and button
+cols = st.columns([1,2,1])
+with cols[1]:
+    email = st.text_input("", value="", max_chars=60, placeholder="tucorreo@ejemplo.com")
+    btn = st.button("Quiero que me contacten", use_container_width=True)
 
-email = st.text_input("", value="", max_chars=60, placeholder="tucorreo@ejemplo.com")
-btn = st.button("Quiero que me contacten")
-
+# Custom success/error message, centered and black
 if btn:
     if re.match(r"[^@]+@[^@]+\.[^@]+", email):
-        # your logic here
-        st.success("¡Gracias! Nos pondremos en contacto contigo muy pronto.")
+        try:
+            with open("emails.txt", "a") as f:
+                f.write(email.strip() + "\n")
+            st.markdown(
+                "<div style='background:#e8ffe8; border-left:5px solid #00a651; color:#111; padding:16px 18px; border-radius:10px; font-size:1.1em; margin-top:14px; text-align:center;'>"
+                "¡Gracias! Nos pondremos en contacto contigo muy pronto."
+                "</div>",
+                unsafe_allow_html=True
+            )
+        except Exception:
+            st.markdown(
+                "<div style='background:#fffbe8; border-left:5px solid #FF6839; color:#111; padding:16px 18px; border-radius:10px; font-size:1.1em; margin-top:14px; text-align:center;'>"
+                "Recibido. Si quieres una respuesta urgente, escríbenos a <b>info@solarchain.es</b>"
+                "</div>",
+                unsafe_allow_html=True
+            )
     else:
-        st.error("Por favor, introduce un email válido.")
-    
+        st.markdown(
+            "<div style='background:#ffeaea; border-left:5px solid #FF6839; color:#111; padding:16px 18px; border-radius:10px; font-size:1.1em; margin-top:14px; text-align:center;'>"
+            "Por favor, introduce un email válido."
+            "</div>",
+            unsafe_allow_html=True
+        )
