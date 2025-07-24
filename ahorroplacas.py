@@ -9,30 +9,29 @@ secundario_color = "#000000"
 bg_color = "#FFFFFF"
 font_family = "'Montserrat', 'Arial', sans-serif"
 
-st.markdown(
-    """
+st.markdown("""
     <style>
-    /* Target ALL Streamlit buttons, including form submit buttons */
-    button[kind="primary"] {
+    /* Super-specific targeting for all Streamlit buttons, including in forms */
+    button[kind="primary"], div.stButton > button, div.stForm > form button {
         color: #FF6839 !important;
         border: 2px solid #FF6839 !important;
         background: #fff !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         border-radius: 12px !important;
         padding: 0.5em 2.5em !important;
         font-size: 1.13em !important;
-        transition: 0.1s !important;
         box-shadow: none !important;
+        text-shadow: none !important;
+        transition: 0.1s !important;
+        outline: none !important;
     }
-    button[kind="primary"]:hover {
+    button[kind="primary"]:hover, div.stButton > button:hover, div.stForm > form button:hover {
         background: #FF6839 !important;
         color: #fff !important;
         border: 2px solid #FF6839 !important;
     }
     </style>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
 st.markdown(
     f"""
