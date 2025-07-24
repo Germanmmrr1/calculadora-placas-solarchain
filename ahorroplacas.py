@@ -11,13 +11,24 @@ secundario_color = "#000000"
 bg_color = "#FFFFFF"
 font_family = "'Montserrat', 'Arial', sans-serif"
 
-def send_notification_email(user_email):
+def send_notification_email(user_email, provincia, gasto_mensual, ibi_anual, num_placas, inversion, ahorro_anual_base, payback_texto):
     sender_email = "gmunozraya@gmail.com"
     sender_password = "eump xkih qqqm phhx"
     recipient_email = "gemura348@gmail.com"
 
-    subject = "Nuevo email recibido desde la calculadora SolarChain"
-    body = f"Nuevo lead recibido: {user_email}"
+    subject = "Nuevo lead recibido desde la calculadora SolarChain"
+    body = f"""
+    Nuevo lead recibido:
+
+    Email: {user_email}
+    Provincia: {provincia}
+    Gasto mensual en electricidad: {gasto_mensual} €
+    IBI anual: {ibi_anual} €
+    Número estimado de placas: {num_placas}
+    Inversión estimada: {inversion} €
+    Ahorro anual estimado (primer año): {ahorro_anual_base} €
+    Payback estimado: {payback_texto}
+    """
 
     msg = MIMEText(body)
     msg['Subject'] = subject
@@ -32,6 +43,7 @@ def send_notification_email(user_email):
     except Exception as e:
         print("Error sending notification:", e)
         return False
+
 
 st.markdown("""
     <style>
@@ -285,6 +297,10 @@ if btn:
 
 if btn:
     if re.match(r"[^@]+@[^@]+\.[^@]+", email):
-        # (save email as before)
-        send_notification_email(email)
-        # (show success message)
+        try:
+            with open("emails.txt", "a") as f:
+                f.write(email.strip() + "\n")
+            send_notification_email(
+                email, provincia, gasto_mensual, ibi_anual,
+                num_placas, inversion, ahorro_anual_base, payback_texto
+            )
