@@ -12,17 +12,19 @@ font_family = "'Montserrat', 'Arial', sans-serif"
 st.markdown(
     """
     <style>
-    div.stButton > button:first-child {
+    /* Target ALL Streamlit buttons, including form submit buttons */
+    button[kind="primary"] {
         color: #FF6839 !important;
         border: 2px solid #FF6839 !important;
         background: #fff !important;
         font-weight: 600 !important;
-        border-radius: 12px;
-        padding: 0.5em 2.5em;
-        font-size: 1.13em;
-        transition: 0.1s;
+        border-radius: 12px !important;
+        padding: 0.5em 2.5em !important;
+        font-size: 1.13em !important;
+        transition: 0.1s !important;
+        box-shadow: none !important;
     }
-    div.stButton > button:first-child:hover {
+    button[kind="primary"]:hover {
         background: #FF6839 !important;
         color: #fff !important;
         border: 2px solid #FF6839 !important;
