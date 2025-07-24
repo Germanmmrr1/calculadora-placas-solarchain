@@ -180,18 +180,29 @@ if gasto_mensual > 0 and ibi_anual > 0:
     # --- AVISO ---
     st.markdown(
         f"""
-        <div class='info-box'>
-            Este cálculo es solo una estimación.<br>
-            ¿Quieres un <b>estudio personalizado y sin compromiso</b> para tu caso concreto?  
-            Déjanos tu email aquí y te contactamos:
+        <div style='
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 2.2em;
+            margin-bottom: 0.7em;
+        '>
+            <div style='font-weight: 600; font-size:1.09em; margin-bottom: 12px;'>¿Quieres un <span style="color:{principal_color};">estudio personalizado</span> y sin compromiso?</div>
+            <div style='font-size: 1em; margin-bottom: 16px; color:#222;'>Déjanos tu email aquí y te contactamos:</div>
         </div>
         """,
         unsafe_allow_html=True
     )
     
-    email = st.text_input("Tu email de contacto", value="", max_chars=60)
+    # Centrar el input y el botón con columnas "vacías" a los lados
+    cols = st.columns([1,2,1])
+    with cols[1]:
+        email = st.text_input("", value="", max_chars=60, placeholder="tucorreo@ejemplo.com")
+        enviar = st.button("Quiero que me contacten")
     
-    if st.button("Quiero que me contacten"):
+    if enviar:
         if re.match(r"[^@]+@[^@]+\.[^@]+", email):
             try:
                 with open("emails.txt", "a") as f:
@@ -202,11 +213,3 @@ if gasto_mensual > 0 and ibi_anual > 0:
         else:
             st.error("Por favor, introduce un email válido.")
     
-    # Puedes dejar el enlace a la web después, si lo ves útil:
-    st.markdown(
-        f"<div style='text-align:center; margin-top:12px; color:{principal_color}; font-size:1.06em;'>"
-        "O visita nuestra web: "
-        "<a href='https://solarchain.es' target='_blank' style='color:#FF6839;text-decoration:underline;font-weight:600;'>solarchain.es</a>."
-        "</div>",
-        unsafe_allow_html=True
-    )
