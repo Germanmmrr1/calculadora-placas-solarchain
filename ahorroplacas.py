@@ -145,10 +145,10 @@ if gasto_mensual > 0 and ibi_anual > 0:
     st.markdown(
         f"<div class='result-box'>"
         f"<p style='font-size:1.18em; color:{principal_color};'><b>Número de placas necesarias:</b> {num_placas}</p>"
-        f"<p style='font-size:1.13em; color:{principal_color};'><b>Ahorro anual estimado (primer año):</b> {ahorro_anual_base:,.0f} €</p>"
-        f"<p style='font-size:1.13em; color:{principal_color};'><b>Ahorro total bonificación IBI:</b> {ahorro_ibi:,.0f} €</p>"
+        f"<p style='font-size:1.13em; color:{principal_color};'><b>Ahorro anual (1er año):</b> {ahorro_anual_base:,.0f} €</p>"
+        f"<p style='font-size:1.13em; color:{principal_color};'><b>Bonificación IBI total:</b> {ahorro_ibi:,.0f} €</p>"
         f"<p style='font-size:1.13em; color:{principal_color};'><b>Inversión estimada:</b> {inversion:,.0f} €</p>"
-        f"<p style='font-size:1.13em; color:{principal_color};'><b>Años para recuperar la inversión:</b> {payback_texto}</p>"
+        f"<p style='font-size:1.13em; color:{principal_color};'><b>Retorno de inversión:</b> {payback_texto}</p>"
         "</div>",
         unsafe_allow_html=True
     )
