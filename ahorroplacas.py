@@ -1,6 +1,7 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
+import re
 
 # --- ESTILOS ---
 principal_color = "#FF6839"
@@ -185,3 +186,20 @@ if gasto_mensual > 0 and ibi_anual > 0:
         "</div>",
         unsafe_allow_html=True
     )
+
+st.markdown(
+    "<div style='margin-top:2.5em; margin-bottom:0.5em; text-align:center;'>"
+    "<b>¿Quieres que te contactemos para un estudio personalizado?</b>"
+    "</div>",
+    unsafe_allow_html=True
+)
+
+email = st.text_input("Déjanos tu email y te contactaremos sin compromiso", value="", max_chars=60)
+
+if st.button("Enviar email"):
+    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        with open("emails.txt", "a") as f:
+            f.write(email.strip() + "\n")
+        st.success("¡Gracias! Nos pondremos en contacto contigo muy pronto.")
+    else:
+        st.error("Por favor, introduce un email válido.")
