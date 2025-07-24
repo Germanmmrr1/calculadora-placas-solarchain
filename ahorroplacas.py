@@ -2,12 +2,36 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
 import re
+import smtplib
+from email.mime.text import MIMEText
 
 # --- ESTILOS ---
 principal_color = "#FF6839"
 secundario_color = "#000000"
 bg_color = "#FFFFFF"
 font_family = "'Montserrat', 'Arial', sans-serif"
+
+def send_notification_email(user_email):
+    sender_email = "gmunozraya@gmail.com"
+    sender_password = "eump xkih qqqm phhx"
+    recipient_email = "gemura348@gmail.com"
+
+    subject = "Nuevo email recibido desde la calculadora SolarChain"
+    body = f"Nuevo lead recibido: {user_email}"
+
+    msg = MIMEText(body)
+    msg['Subject'] = subject
+    msg['From'] = sender_email
+    msg['To'] = recipient_email
+
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, recipient_email, msg.as_string())
+        return True
+    except Exception as e:
+        print("Error sending notification:", e)
+        return False
 
 st.markdown("""
     <style>
@@ -258,3 +282,9 @@ if btn:
             "</div>",
             unsafe_allow_html=True
         )
+
+if btn:
+    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        # (save email as before)
+        send_notification_email(email)
+        # (show success message)
