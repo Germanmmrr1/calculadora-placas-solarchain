@@ -5,6 +5,11 @@ import re
 import smtplib
 from email.mime.text import MIMEText
 
+st.set_page_config(
+    page_title="Calculadora Placas Solares ☀️",
+    page_icon="logo_browser.png"
+)
+
 # --- ESTILOS ---
 principal_color = "#FF6839"
 secundario_color = "#000000"
