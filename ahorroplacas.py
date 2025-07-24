@@ -19,7 +19,7 @@ font_family = "'Montserrat', 'Arial', sans-serif"
 def send_notification_email(nombre,user_email, provincia, gasto_mensual, ibi_anual, num_placas, inversion, ahorro_anual_base, payback_texto):
     sender_email = "gmunozraya@gmail.com"
     sender_password = "eump xkih qqqm phhx"
-    recipient_email = "gemura348@gmail.com"
+    recipient_email = "bmunoz@solarchain.es"
 
     subject = "Nuevo lead recibido desde la calculadora SolarChain"
     body = f"""
