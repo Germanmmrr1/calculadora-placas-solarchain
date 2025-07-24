@@ -183,7 +183,7 @@ st.markdown(
 if gasto_mensual > 0 and ibi_anual > 0:
     # --- CÁLCULOS ---
     num_placas = (gasto_mensual / 1.26) * 0.6 / 0.15 * 12 / 1500
-    num_placas = round(num_placas) * 2
+    num_placas = round(num_placas) * 3
     ahorro_anual_base = num_placas * 0.55 * 1500 * 0.15
     gasto_anual = gasto_mensual * 12
     inversion = 4000 + 200 * num_placas
